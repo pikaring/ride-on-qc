@@ -410,9 +410,22 @@
     <a href="https://github.com/pikaring/ride-on-qc">GitHub</a>
     <a href="https://github.com/pikaring/ride-on-qc/blob/main/LICENSE">MIT License</a>
     <a href="https://github.com/pikaring/ride-on-qc/blob/main/docs/spec.md">仕様書</a>
+    <span class="counter">累計アクセス <b id="counter-value">―</b> 回</span>
     <span class="sep">Excel読取に <a href="https://sheetjs.com/">SheetJS</a>、地図に <a href="https://maps.gsi.go.jp/development/ichiran.html">地理院タイル</a>、天気に <a href="https://open-meteo.com/">Open-Meteo</a> を利用</span>
   </div>
 </footer>
 
+<script>
+// アクセスカウンター（庁内Webと同じGAS。page名でサイトごとに別カウント）
+(function () {
+  var el = document.getElementById('counter-value');
+  if (!el) return;
+  var page = location.pathname.replace(/index\.html$/, '');
+  fetch('https://script.google.com/macros/s/AKfycbxkQLZXNAFXkT7zhIO0TmMDGU3A0TQ234Lf-yhw5J7lvFAjCi3KLNLRd_LKd_xlOxPd/exec?page=' + encodeURIComponent(page))
+    .then(function (r) { return r.json(); })
+    .then(function (d) { el.textContent = Number(d.count).toLocaleString('ja-JP'); })
+    .catch(function () { el.textContent = '―'; });
+})();
+</script>
 </body>
 </html>
