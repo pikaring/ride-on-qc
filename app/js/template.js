@@ -916,7 +916,7 @@ input[type=date], input[type=time] { background:var(--bg-card-alt); color:var(--
     return '<!DOCTYPE html>\n<html lang="ja">\n<head>\n' +
       '<meta charset="UTF-8">\n' +
       '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">\n' +
-      '<meta name="generator" content="brevet-cuesheet-generator">\n' +
+      '<meta name="generator" content="ride-on-qc">\n' +
       '<title>' + esc(m.title) + '</title>\n' +
       '<style>' + outputCss() + '</style>\n' +
       '</head>\n<body>\n' +

@@ -9,7 +9,7 @@ GPXファイルと主催者配布のExcelキューシートから、**iPhoneで�
 
 ## 使い方
 
-1. [ツールを開く](https://pikaring.github.io/brevet-cuesheet/app/)（手元で動かす場合は `app/index.html`。サンプル読込を使うならローカルサーバ経由）
+1. [ツールを開く](https://pikaring.github.io/ride-on-qc/app/)（手元で動かす場合は `app/index.html`。サンプル読込を使うならローカルサーバ経由）
 2. **STEP1** GPX（必須）とExcel（任意）をドラッグ＆ドロップ
 3. **STEP2** シート種別（簡易／詳細）と列の対応を確認（自動推定済み。違っていればプルダウンで修正）
 4. **STEP3** 大会名・出走日時・想定速度などを設定して「キューシートを生成する」
@@ -20,7 +20,7 @@ GPXファイルと主催者配布のExcelキューシートから、**iPhoneで�
 ### ローカルで動かす
 
 ```bash
-cd brevet-cuesheet
+cd ride-on-qc
 python3 -m http.server 8000   # http://localhost:8000/     … 紹介ページ
                               # http://localhost:8000/app/ … ツール本体
 ```
@@ -32,8 +32,8 @@ python3 -m http.server 8000   # http://localhost:8000/     … 紹介ページ
 ビルド不要の静的サイトなので、このリポジトリをそのまま公開できます。
 Settings → Pages → Source を「Deploy from a branch」、Branch を `main` / `/ (root)` に設定します。
 
-- 紹介ページ: <https://pikaring.github.io/brevet-cuesheet/>
-- ツール本体: <https://pikaring.github.io/brevet-cuesheet/app/>
+- 紹介ページ: <https://pikaring.github.io/ride-on-qc/>
+- ツール本体: <https://pikaring.github.io/ride-on-qc/app/>
 
 ## 生成されるHTMLの機能
 
@@ -158,7 +158,7 @@ STEP4の「座標マッチング結果」で、各地点の座標・方位・取
 ## ディレクトリ構成
 
 ```
-brevet-cuesheet/
+ride-on-qc/
 ├── index.html              紹介ページ（GitHub Pages のトップ）
 ├── assets/                 紹介ページ用（site.css・アイコン）
 ├── make_icon.py            アイコンの生成スクリプト

@@ -102,7 +102,7 @@ const wptXml = cps.filter(c => c.kind.startsWith('PC') || c.kind.startsWith('通
 }).join('\n');
 
 const gpx = `<?xml version="1.0" encoding="UTF-8"?>
-<gpx version="1.1" creator="brevet-cuesheet demo" xmlns="http://www.topografix.com/GPX/1/1">
+<gpx version="1.1" creator="ride-on-qc demo" xmlns="http://www.topografix.com/GPX/1/1">
   <metadata><name>デモBRM1010サンプル200km</name></metadata>
 ${wptXml}
   <trk><name>デモBRM1010サンプル200km</name><trkseg>
