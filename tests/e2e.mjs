@@ -18,7 +18,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../app');
 const OUT = process.env.OUT_DIR || '/tmp';
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.gpx': 'application/gpx+xml', '.xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' };
 

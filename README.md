@@ -8,7 +8,7 @@ GPXファイルと主催者配布のExcelキューシートから、**iPhoneで�
 
 ## 使い方
 
-1. `index.html` をブラウザで開く（サンプル読込を使う場合はローカルサーバ経由）
+1. [ツールを開く](https://pikaring.github.io/brevet-cuesheet/app/)（手元で動かす場合は `app/index.html`。サンプル読込を使うならローカルサーバ経由）
 2. **STEP1** GPX（必須）とExcel（任意）をドラッグ＆ドロップ
 3. **STEP2** シート種別（簡易／詳細）と列の対応を確認（自動推定済み。違っていればプルダウンで修正）
 4. **STEP3** 大会名・出走日時・想定速度などを設定して「キューシートを生成する」
@@ -20,7 +20,8 @@ GPXファイルと主催者配布のExcelキューシートから、**iPhoneで�
 
 ```bash
 cd brevet-cuesheet
-python3 -m http.server 8000   # http://localhost:8000/ を開く
+python3 -m http.server 8000   # http://localhost:8000/     … 紹介ページ
+                              # http://localhost:8000/app/ … ツール本体
 ```
 
 `file://` で直接開いても動作しますが、「サンプルデータで試す」だけは `fetch` が使えないため利用できません。
@@ -28,8 +29,10 @@ python3 -m http.server 8000   # http://localhost:8000/ を開く
 ### 公開する（GitHub Pages）
 
 ビルド不要の静的サイトなので、このリポジトリをそのまま公開できます。
-Settings → Pages → Source を「Deploy from a branch」、Branch を `main` / `/ (root)` にすると
-`https://<ユーザー名>.github.io/brevet-cuesheet/` で動きます。
+Settings → Pages → Source を「Deploy from a branch」、Branch を `main` / `/ (root)` に設定します。
+
+- 紹介ページ: <https://pikaring.github.io/brevet-cuesheet/>
+- ツール本体: <https://pikaring.github.io/brevet-cuesheet/app/>
 
 ## 生成されるHTMLの機能
 
@@ -155,19 +158,23 @@ STEP4の「座標マッチング結果」で、各地点の座標・方位・取
 
 ```
 brevet-cuesheet/
-├── index.html              生成ツール本体
-├── assets/app.css
-├── js/
-│   ├── util.js             距離・方位・時刻・日出日没
-│   ├── offline.js          天気予報・地図タイルの取得（オフライン埋め込み用）
-│   ├── gpx.js              GPX解析／累積距離／線形補間／方位
-│   ├── turns.js            曲がり角の自動抽出
-│   ├── xlsx-import.js      Excel読取・見出し/列推定・時刻パーサ
-│   ├── match.js            Excel×GPXの突き合わせ・ACP時刻計算
-│   ├── template.js         出力HTMLテンプレート（CSS＋ランタイム）
-│   └── app.js              画面制御
-├── vendor/xlsx.full.min.js SheetJS 0.18.5（同梱：オフラインでも動くように）
-├── samples/                デモ用の架空コース（GPX＋書式違いのExcel 6種）
+├── index.html              紹介ページ（GitHub Pages のトップ）
+├── assets/                 紹介ページ用（site.css・アイコン）
+├── make_icon.py            アイコンの生成スクリプト
+├── app/                    ツール本体（ここが実体）
+│   ├── index.html
+│   ├── assets/app.css
+│   ├── js/
+│   │   ├── util.js         距離・方位・時刻・日出日没
+│   │   ├── offline.js      天気予報・地図タイルの取得（オフライン埋め込み用）
+│   │   ├── gpx.js          GPX解析／累積距離／線形補間／方位
+│   │   ├── turns.js        曲がり角の自動抽出
+│   │   ├── xlsx-import.js  Excel読取・見出し/列推定・時刻パーサ
+│   │   ├── match.js        Excel×GPXの突き合わせ・ACP時刻計算
+│   │   ├── template.js     出力HTMLテンプレート（CSS＋ランタイム）
+│   │   └── app.js          画面制御
+│   ├── vendor/xlsx.full.min.js  SheetJS 0.18.5（同梱：オフラインでも動くように）
+│   └── samples/            デモ用の架空コース（GPX＋書式違いのExcel 6種）
 │                           標準／区間距離のみ／2行見出し／矢印＋文中時刻／英語見出し／Audax標準型
 ├── tests/
 │   ├── make-samples.mjs    サンプル生成

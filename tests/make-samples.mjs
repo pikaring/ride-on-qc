@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const root = path.resolve(__dirname, '..');
+const root = path.resolve(__dirname, '../app');
 const XLSX = createRequire(import.meta.url)(path.join(root, 'vendor/xlsx.full.min.js'));
 
 const R = 6371008.8;
