@@ -1,4 +1,4 @@
-/* ブルベ キューシート生成ツール 紹介ページ
+/* Ride on QC 紹介ページ
    夜間走行を思わせる紺と、反射材のアンバーの2色。
    純白と純黒を使わないことで、落ち着いた見え方にする。 */
 
@@ -94,25 +94,78 @@ h1 { font-size: clamp(36px, 4.6vw, 58px); font-weight: 750; margin: 22px 0 20px;
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 32px 0 18px; }
 .hero-note { font-size: 13px; color: var(--muted); }
 
-/* ---- 生成されるキューシートのモック（スマホの画面） ---- */
+/* ---- 生成されるキューシートのモック（スマホの画面） ----
+   実物（template.js）の配色・寸法を縮尺して写している。
+   白いカード＋#f2f2f7 の下地、矢印は大きく、距離は太字。 */
 .phone {
-  width: 300px; margin: 0 auto;
-  background: var(--night); border-radius: 30px; padding: 12px;
+  width: 320px; margin: 0 auto;
+  background: var(--night); border-radius: 34px; padding: 12px;
   box-shadow: 0 30px 70px -26px #16202f66, 0 0 0 1px #d9d4cb;
 }
-.phone-screen { background: #0e141f; border-radius: 20px; overflow: hidden; color: #e8ecf3; }
-.cue-head { padding: 14px 16px 12px; border-bottom: 1px solid var(--night-line); }
-.cue-head b { display: block; font-size: 14px; font-weight: 650; }
-.cue-head span { font-size: 11px; color: #8b95a8; }
-.cue-row { display: grid; grid-template-columns: 52px 26px 1fr auto; gap: 10px; align-items: center;
-           padding: 11px 16px; border-bottom: 1px solid #1b2536; font-size: 12.5px; }
-.cue-row .km { color: var(--amber); font-weight: 700; font-variant-numeric: tabular-nums; }
-.cue-row .ar { color: #e8ecf3; font-size: 15px; text-align: center; }
-.cue-row .pt { color: #cdd4e0; }
-.cue-row .tm { color: #8b95a8; font-size: 11px; font-variant-numeric: tabular-nums; }
-.cue-row.cp { background: #16203040; }
-.cue-row.cp .pt { color: var(--amber); font-weight: 650; }
-.cue-foot { padding: 12px 16px; font-size: 11px; color: #8b95a8; display: flex; justify-content: space-between; }
+.phone-screen {
+  background: #f2f2f7; border-radius: 24px; overflow: hidden; color: #000;
+  font-family: -apple-system, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+  padding: 0 8px 8px;
+}
+.cs-nav { display: flex; background: #fff; margin: 0 -8px 8px; border-bottom: 1px solid #d5d5da; }
+.cs-nav span { flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: #6e6e73; padding: 9px 0 7px; border-bottom: 2px solid transparent; }
+.cs-nav .on { color: #c0392b; border-bottom-color: #c0392b; font-weight: 700; }
+.cs-card { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px #0000001a; overflow: hidden; margin-bottom: 8px; }
+.cs-card.cs-next { opacity: .55; }
+.cs-main { display: flex; }
+.cs-side { width: 46px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #ececf0; border-right: 1px solid #d5d5da; padding: 8px 2px; }
+.cs-arrow { font-size: 24px; font-weight: 700; line-height: 1; }
+.cs-sig { font-size: 9px; color: #1a7a3a; margin-top: 4px; }
+.cs-body { flex: 1; padding: 9px 11px; min-width: 0; }
+.cs-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
+.cs-place, .cs-road, .cs-mark { font-size: 14px; font-weight: 700; line-height: 1.35; }
+.cs-dist { font-size: 10px; color: #6e6e73; font-weight: 600; white-space: nowrap; }
+.cs-dist b { font-size: 16px; color: #000; font-weight: 800; }
+.cs-road { margin-top: 3px; }
+.cs-mark { margin-top: 4px; }
+.cs-wxbtn { margin: 6px 10px 8px; background: #0062cc; color: #fff; border-radius: 8px; text-align: center; font-size: 11px; font-weight: 700; padding: 7px; }
+.cs-wx { margin: 0 10px 8px; background: #ececf0; border-radius: 9px; padding: 8px 10px; display: flex; align-items: center; gap: 10px; }
+.cs-wind { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; min-width: 40px; }
+.cs-wind .ic { font-size: 22px; line-height: 1; font-weight: 700; }
+.cs-wind .lb { font-size: 9px; font-weight: 700; margin-top: 2px; }
+.cs-wind.head { color: #c0392b; }
+.cs-wind.tail { color: #1a7a3a; }
+.cs-wind.cross { color: #96700a; }
+.cs-det { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 5px 10px; }
+.cs-det div { display: flex; flex-direction: column; }
+.cs-det .l { font-size: 8.5px; color: #6e6e73; font-weight: 600; }
+.cs-det .v { font-size: 12px; font-weight: 800; line-height: 1.25; }
+.cs-det .v.rain { color: #0062cc; }
+.cs-map { margin: 0 10px 10px; }
+.cs-map svg { display: block; width: 100%; border-radius: 9px; border: 1px solid #d5d5da; }
+.cs-attr { font-size: 7.5px; color: #6e6e73; text-align: center; margin-top: 4px; }
+
+/* ---- 地図と風のハイライト ---- */
+.hl { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding: 36px 0; border-top: 1px solid var(--line); }
+.sec-head + .hl { border-top: 0; padding-top: 0; }
+.hl.rev .hl-text { order: 2; }
+.hl-text .eyebrow { margin-bottom: 12px; }
+.hl-text h3 { font-size: clamp(20px, 2.1vw, 26px); margin-bottom: 14px; }
+.hl-text ul { margin: 18px 0 0; padding-left: 1.1em; font-size: 14.5px; }
+.hl-text li { margin-bottom: 5px; }
+.hl-visual { display: flex; justify-content: center; }
+.mini-map { width: 100%; max-width: 420px; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; box-shadow: 0 24px 50px -30px #16202f55; }
+.mini-map svg { display: block; width: 100%; border-radius: 12px; border: 1px solid var(--line); }
+.mini-cap { font-size: 12.5px; color: var(--muted); margin-top: 10px; text-align: center; }
+.sw { display: inline-block; width: 18px; height: 4px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
+.sw.gray { background: #8e8e93; }
+.sw.red { background: #ff3b30; }
+.sw.pin { width: 10px; height: 10px; border-radius: 50%; background: #ff3b30; border: 2px solid #fff; box-shadow: 0 0 0 1px #0004; }
+.wind-stack { width: 100%; max-width: 420px; display: grid; gap: 10px; }
+.wx-row { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; display: flex; align-items: center; gap: 16px; box-shadow: 0 14px 34px -26px #16202f55; }
+.wx-row .cs-wind { min-width: 54px; }
+.wx-row .cs-wind .ic { font-size: 30px; }
+.wx-row .cs-wind .lb { font-size: 12px; }
+.wx-row .cs-det { grid-template-columns: repeat(4, 1fr); gap: 4px 10px; }
+.wx-row .cs-det .l { font-size: 11px; }
+.wx-row .cs-det .v { font-size: 16px; color: var(--ink); }
+.wx-row .cs-det .v.rain { color: #0062cc; }
+.alt { background: var(--white); border-top: 1px solid var(--line); }
 
 /* ---- 仕様の帯 ---- */
 .specs { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--white); }
@@ -190,7 +243,9 @@ details p { margin-top: 12px; font-size: 15px; padding-left: 24px; }
 .footer .sep { margin-left: auto; }
 
 @media (max-width: 900px) {
-  .hero-grid, .night-grid { grid-template-columns: 1fr; gap: 40px; }
+  .hero-grid, .night-grid, .hl { grid-template-columns: 1fr; gap: 40px; }
+  .hl.rev .hl-text { order: 0; }
+  .hl { padding: 28px 0; }
   .cards, .steps { grid-template-columns: 1fr; }
   .specs-grid { grid-template-columns: 1fr 1fr; }
   .spec:nth-child(3) { border-left: 0; }
@@ -203,7 +258,8 @@ details p { margin-top: 12px; font-size: 15px; padding-left: 24px; }
   .specs-grid { grid-template-columns: 1fr; }
   .spec { border-left: 0; }
   .hero { padding: 56px 0 48px; }
-  .phone { width: 100%; max-width: 300px; }
+  .phone { width: 100%; max-width: 320px; }
+  .wx-row .cs-det { grid-template-columns: 1fr 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {

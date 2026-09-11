@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ブルベ キューシート生成ツール｜GPXとExcelから、iPhoneで見やすい1枚に</title>
-<meta name="description" content="GPXと主催者配布のExcelキューシートから、iPhoneで見やすい単一HTMLを作る無料ツール。オフラインで開けて、ETAはリアルタイムに再計算。ファイルはブラウザ内だけで処理します。">
-<meta property="og:title" content="ブルベ キューシート生成ツール">
-<meta property="og:description" content="GPXとExcelから、iPhoneで見やすい単一HTMLのキューシートを生成。オフライン動作・ブラウザ内処理。">
+<title>Ride on QC｜曲がり角ごとの地図と、通過時刻の風向きが出るブルベ キューシート</title>
+<meta name="description" content="GPXと主催者配布のExcelキューシートから、iPhone向けの単一HTMLを作る無料ツール。曲がり角ごとの詳細地図と、通過予定時刻の天気・風向き（追い風／向かい風）を表示。圏外でも開けて、ファイルはブラウザ内だけで処理します。">
+<meta property="og:title" content="Ride on QC">
+<meta property="og:description" content="曲がり角ごとの地図と、通過時刻の風向きが出るブルベ用キューシート。GPXとExcelから単一HTMLを生成。">
 <meta property="og:type" content="website">
 <link rel="icon" href="assets/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,11 +18,11 @@
 
 <header class="header">
   <div class="wrap header-inner">
-    <a class="brand" href="#top"><img src="assets/icon.png" alt=""> ブルベ キューシート</a>
+    <a class="brand" href="#top"><img src="assets/icon.png" alt=""> Ride on QC</a>
     <nav class="nav">
+      <a href="#highlight">地図と風</a>
       <a href="#features">できること</a>
       <a href="#how">使い方</a>
-      <a href="#sheet">出来るもの</a>
       <a href="#faq">よくある質問</a>
       <a class="btn btn-main" href="app/">ツールを開く</a>
     </nav>
@@ -35,30 +35,79 @@
     <div class="wrap hero-grid">
       <div>
         <span class="pill"><b>無料</b> · インストール不要 · MIT License</span>
-        <h1>走るときに<br>見たい形へ。</h1>
+        <h1>曲がり角ごとに、<br>地図と風が出る。</h1>
         <p class="lead">GPXと主催者配布のExcelキューシートを放り込むだけ。
-          iPhoneで見やすい1枚のHTMLになります。圏外でも開けて、
-          到着予想時刻はその場で計算し直します。</p>
+          曲がり角ひとつひとつに詳細地図が付き、そこを通る時刻の
+          天気と風向きまで入った、iPhone向けの1枚のHTMLになります。</p>
         <div class="hero-actions">
           <a class="btn btn-main" href="app/">ツールを開く</a>
           <a class="btn btn-sub" href="https://github.com/pikaring/brevet-cuesheet">GitHubで見る</a>
         </div>
-        <p class="hero-note">ブラウザだけで動きます。ファイルはPCの外に出ません。</p>
+        <p class="hero-note">ブラウザだけで動きます。GPXもExcelもPCの外に出ません。</p>
       </div>
 
+      <!-- 生成される詳細版キューシートの1枚。実物の配色・構成に合わせてある -->
       <div class="phone" aria-hidden="true">
         <div class="phone-screen">
-          <div class="cue-head">
-            <b>◯◯ブルベ 200km</b>
-            <span>出走 05:00 ／ 想定 22.0km/h</span>
+          <div class="cs-nav"><span>簡易版</span><span class="on">詳細版</span></div>
+          <div class="cs-card">
+            <div class="cs-main">
+              <div class="cs-side"><span class="cs-arrow">→</span><span class="cs-sig">●</span></div>
+              <div class="cs-body">
+                <div class="cs-top"><span class="cs-place">No.12　右折</span><span class="cs-dist"><b>48.2</b> km</span></div>
+                <div class="cs-road">国道◯号 → 県道◯号</div>
+                <div class="cs-mark">セブンイレブンの角</div>
+              </div>
+            </div>
+            <div class="cs-wxbtn">🌤 天気・地図</div>
+            <div class="cs-wx">
+              <div class="cs-wind head"><span class="ic">↑</span><span class="lb">向かい風</span></div>
+              <div class="cs-det">
+                <div><span class="l">ETA</span><span class="v">9/12 07:11</span></div>
+                <div><span class="l">気温</span><span class="v">18.4℃</span></div>
+                <div><span class="l">風</span><span class="v">北西 4.2m/s</span></div>
+                <div><span class="l">降水量</span><span class="v">0.0mm/h</span></div>
+              </div>
+            </div>
+            <div class="cs-map">
+              <svg viewBox="0 0 320 192" xmlns="http://www.w3.org/2000/svg">
+                <rect width="320" height="192" fill="#f6f3ec"/>
+                <!-- 地理院タイル（淡色）風の下地：田畑・水部・道路 -->
+                <rect x="0" y="0" width="120" height="70" fill="#eef1e4"/>
+                <rect x="200" y="110" width="120" height="82" fill="#eef1e4"/>
+                <path d="M0 150 C60 140 90 170 150 160 S260 130 320 150 L320 192 L0 192Z" fill="#dbe8f1"/>
+                <path d="M0 150 C60 140 90 170 150 160 S260 130 320 150" stroke="#bcd3e4" stroke-width="1.5" fill="none"/>
+                <g stroke="#d9d4c9" stroke-width="7" fill="none" stroke-linecap="round">
+                  <path d="M-10 96 L330 96"/><path d="M160 -10 L160 200"/><path d="M40 -10 L60 200"/><path d="M230 -10 L260 200"/>
+                </g>
+                <g stroke="#ffffff" stroke-width="5" fill="none" stroke-linecap="round">
+                  <path d="M-10 96 L330 96"/><path d="M160 -10 L160 200"/><path d="M40 -10 L60 200"/><path d="M230 -10 L260 200"/>
+                </g>
+                <text x="72" y="60" font-size="9" fill="#9a958a" font-weight="700">◯◯町</text>
+                <text x="238" y="180" font-size="9" fill="#9a958a" font-weight="700">◯◯川</text>
+                <!-- ルート略図：灰＝手前、赤＝進む向き（白縁付き） -->
+                <path d="M160 200 L160 96" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round"/>
+                <path d="M160 96 L305 96" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round"/>
+                <path d="M160 200 L160 96" stroke="#8e8e93" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                <path d="M160 96 L305 96" stroke="#ff3b30" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                <polygon points="312,96 300,90 300,102" fill="#ff3b30" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="160" cy="96" r="8" fill="#ff3b30" stroke="#fff" stroke-width="3"/>
+                <text x="8" y="16" font-size="11" font-weight="700" fill="#6e6e73">N↑</text>
+                <g stroke="#000" stroke-width="1.5" opacity=".75"><line x1="10" y1="180" x2="60" y2="180"/><line x1="10" y1="176" x2="10" y2="184"/><line x1="60" y1="176" x2="60" y2="184"/></g>
+                <text x="64" y="184" font-size="10" font-weight="700" fill="#000" opacity=".85">100m</text>
+              </svg>
+              <div class="cs-attr">地理院タイル（国土地理院）・赤い線＝進む向き／タップでGoogleマップ</div>
+            </div>
           </div>
-          <div class="cue-row"><span class="km">0.0</span><span class="ar">▲</span><span class="pt">START 道の駅</span><span class="tm">05:00</span></div>
-          <div class="cue-row"><span class="km">12.4</span><span class="ar">→</span><span class="pt">◯◯橋 交差点</span><span class="tm">05:34</span></div>
-          <div class="cue-row cp"><span class="km">48.2</span><span class="ar">■</span><span class="pt">PC1 コンビニ</span><span class="tm">07:11</span></div>
-          <div class="cue-row"><span class="km">63.7</span><span class="ar">←</span><span class="pt">県道◯号へ</span><span class="tm">07:53</span></div>
-          <div class="cue-row"><span class="km">88.1</span><span class="ar">↑</span><span class="pt">直進（峠の入口）</span><span class="tm">09:00</span></div>
-          <div class="cue-row cp"><span class="km">104.5</span><span class="ar">■</span><span class="pt">PC2 商店</span><span class="tm">09:45</span></div>
-          <div class="cue-foot"><span>残り 95.5km</span><span>Close まで 3:12</span></div>
+          <div class="cs-card cs-next">
+            <div class="cs-main">
+              <div class="cs-side"><span class="cs-arrow">←</span></div>
+              <div class="cs-body">
+                <div class="cs-top"><span class="cs-place">No.13　左折</span><span class="cs-dist"><b>51.6</b> km</span></div>
+                <div class="cs-road">県道◯号 → 市道</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -66,17 +115,114 @@
 
   <div class="specs">
     <div class="wrap specs-grid">
-      <div class="spec"><b>圏外でも開ける</b><span>単一HTMLなので端末に置くだけ</span></div>
-      <div class="spec"><b>ETAが動く</b><span>速度・休憩に応じて再計算</span></div>
+      <div class="spec"><b>曲がり角ごとに地図</b><span>進む向きを赤い線で示す詳細地図</span></div>
+      <div class="spec"><b>通過時刻の風向き</b><span>追い風・向かい風・横風を色で</span></div>
+      <div class="spec"><b>圏外でも開ける</b><span>地図と予報を埋め込める単一HTML</span></div>
       <div class="spec"><b>ブラウザ内で処理</b><span>GPXもExcelも送信しません</span></div>
-      <div class="spec"><b>ダークモード対応</b><span>夜間走行でも見やすく</span></div>
     </div>
   </div>
 
-  <section id="features">
+  <section id="highlight">
     <div class="wrap">
       <div class="sec-head">
-        <p class="eyebrow">01 — FEATURES</p>
+        <p class="eyebrow">01 — MAP &amp; WIND</p>
+        <h2>迷いやすい場所と、<br>つらい区間が、事前にわかる。</h2>
+        <p>ブルベで困るのは「どっちに曲がるか」と「風」です。
+          この2つを、曲がり角ごとのカードにまとめました。</p>
+      </div>
+
+      <div class="hl">
+        <div class="hl-text">
+          <p class="eyebrow">曲がり角ごとの詳細地図</p>
+          <h3>すべての曲がり角に、その場所の地図が付く。</h3>
+          <p>国土地理院の地図タイルの上に、GPXから起こしたルートを重ねます。
+            灰色が手前、赤い線が進む向き。分岐の形が一目でわかります。</p>
+          <ul>
+            <li>曲がり角・PC・通過チェックの全地点に「🌤 天気・地図」ボタン</li>
+            <li>タップでGoogleマップ（iPhoneならマップアプリ）が開く</li>
+            <li>地図画像を埋め込んでおけば圏外でも表示（縮尺はz16／z15を選択）</li>
+            <li>地図を入れない地点にも、ルート略図（北が上・縮尺付き）が必ず入る</li>
+          </ul>
+        </div>
+        <div class="hl-visual">
+          <div class="mini-map">
+            <svg viewBox="0 0 320 192" xmlns="http://www.w3.org/2000/svg">
+              <rect width="320" height="192" fill="#f6f3ec"/>
+              <rect x="180" y="0" width="140" height="80" fill="#eef1e4"/>
+              <rect x="0" y="120" width="110" height="72" fill="#eef1e4"/>
+              <g stroke="#d9d4c9" stroke-width="7" fill="none" stroke-linecap="round">
+                <path d="M-10 120 L330 60"/><path d="M120 -10 L200 200"/><path d="M-10 30 L330 30"/>
+              </g>
+              <g stroke="#ffffff" stroke-width="5" fill="none" stroke-linecap="round">
+                <path d="M-10 120 L330 60"/><path d="M120 -10 L200 200"/><path d="M-10 30 L330 30"/>
+              </g>
+              <path d="M198 195 L160 100" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round"/>
+              <path d="M160 100 L20 124" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round"/>
+              <path d="M198 195 L160 100" stroke="#8e8e93" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <path d="M160 100 L20 124" stroke="#ff3b30" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <polygon points="14,125 26,118 27,130" fill="#ff3b30" stroke="#fff" stroke-width="1.2"/>
+              <circle cx="160" cy="100" r="8" fill="#ff3b30" stroke="#fff" stroke-width="3"/>
+              <text x="8" y="16" font-size="11" font-weight="700" fill="#6e6e73">N↑</text>
+              <g stroke="#000" stroke-width="1.5" opacity=".75"><line x1="10" y1="180" x2="60" y2="180"/><line x1="10" y1="176" x2="10" y2="184"/><line x1="60" y1="176" x2="60" y2="184"/></g>
+              <text x="64" y="184" font-size="10" font-weight="700" fill="#000" opacity=".85">100m</text>
+            </svg>
+            <div class="mini-cap"><span class="sw gray"></span>手前　<span class="sw red"></span>進む向き　<span class="sw pin"></span>曲がり角</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hl rev">
+        <div class="hl-text">
+          <p class="eyebrow">通過時刻の天気と風向き</p>
+          <h3>「そこを何時に通るか」に合わせた予報。</h3>
+          <p>出走時刻と想定速度から各地点のETAを出し、その時刻の予報を引きます。
+            風向きはコースの進行方位と突き合わせて、追い風か向かい風かを判定します。</p>
+          <ul>
+            <li>気温・風向風速・降水量を、地点ごと・時刻ごとに表示</li>
+            <li>追い風＝緑、向かい風＝赤、横風＝黄。区間の見通しが立つ</li>
+            <li>速度や休憩を変えればETAが動き、予報もその時刻のものに</li>
+            <li>予報はOpen-Meteo（16日先まで）。生成時に埋め込めば圏外でも読める</li>
+          </ul>
+        </div>
+        <div class="hl-visual">
+          <div class="wind-stack">
+            <div class="wx-row">
+              <div class="cs-wind tail"><span class="ic">↓</span><span class="lb">追い風</span></div>
+              <div class="cs-det">
+                <div><span class="l">ETA</span><span class="v">9/12 05:34</span></div>
+                <div><span class="l">風</span><span class="v">南 3.1m/s</span></div>
+                <div><span class="l">気温</span><span class="v">15.2℃</span></div>
+                <div><span class="l">降水量</span><span class="v">0.0mm/h</span></div>
+              </div>
+            </div>
+            <div class="wx-row">
+              <div class="cs-wind head"><span class="ic">↑</span><span class="lb">向かい風</span></div>
+              <div class="cs-det">
+                <div><span class="l">ETA</span><span class="v">9/12 09:45</span></div>
+                <div><span class="l">風</span><span class="v">北西 6.8m/s</span></div>
+                <div><span class="l">気温</span><span class="v">21.0℃</span></div>
+                <div><span class="l">降水量</span><span class="v rain">1.2mm/h</span></div>
+              </div>
+            </div>
+            <div class="wx-row">
+              <div class="cs-wind cross"><span class="ic">→</span><span class="lb">横風</span></div>
+              <div class="cs-det">
+                <div><span class="l">ETA</span><span class="v">9/12 13:02</span></div>
+                <div><span class="l">風</span><span class="v">西 5.4m/s</span></div>
+                <div><span class="l">気温</span><span class="v">24.6℃</span></div>
+                <div><span class="l">降水量</span><span class="v">0.0mm/h</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="features">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">02 — FEATURES</p>
         <h2>紙のキューシートを、<br>走行中の道具にする。</h2>
         <p>配布されるキューシートは、走りながら見るようにはできていません。
           距離・時刻・曲がる方向を、走行中に必要な形へ組み直します。</p>
@@ -109,18 +255,18 @@
           <p>実際の走行は、計画どおりには進みません。</p>
           <ul>
             <li>距離補正ステッパー（±0.1／±1km）でズレを合わせる</li>
-            <li>速度を変えると、以降の時刻がその場で追従</li>
+            <li>速度を変えると、以降の時刻と天気がその場で追従</li>
             <li>簡易版（PC中心）と詳細版（全曲がり角）を切り替え</li>
           </ul>
         </div>
         <div class="card">
           <p class="num">04</p>
           <h3>出先で開ける</h3>
-          <p>生成物は、画像もスクリプトも入った1枚のHTMLです。</p>
+          <p>生成物は、地図も予報もスクリプトも入った1枚のHTMLです。</p>
           <ul>
             <li>「ファイル」アプリやDropboxに置けば圏外でも表示</li>
-            <li>ダークモード対応</li>
-            <li>天気と地図を埋め込むことも可能（取得時のみ通信）</li>
+            <li>ダークモード対応（地図も夜間向けに反転）</li>
+            <li>地図の埋め込みは「全地点」「PCのみ」「略図のみ」から選べる</li>
           </ul>
         </div>
       </div>
@@ -130,7 +276,7 @@
   <section class="night" id="how">
     <div class="wrap">
       <div class="sec-head">
-        <p class="eyebrow">02 — HOW TO USE</p>
+        <p class="eyebrow">03 — HOW TO USE</p>
         <h2>4ステップで出来上がり。</h2>
         <p>アカウントもインストールも要りません。ブラウザで開いて、
           ファイルを2つ放り込むところから始まります。</p>
@@ -144,21 +290,21 @@
               Excelが無い場合は、GPXから曲がり角を自動で抽出します。</span>
           </div>
           <div class="night-item">
-            <b>列の対応は自動で推定</b>
-            <span>距離・地点名・方向・備考の列を推定します。
-              違っていればプルダウンで直すだけです。</span>
+            <b>地図と天気の埋め込み</b>
+            <span>生成時に「埋め込む」を選ぶと、地図タイルと予報をHTMLに焼き込みます。
+              予報は開催16日前から取れるので、直前に作り直すのがおすすめです。</span>
           </div>
           <div class="night-item">
             <b>ファイルは外に出ません</b>
-            <span>読み込みも計算もブラウザの中だけで行います。
-              サーバーに送信する処理はありません。</span>
+            <span>読み込みも計算もブラウザの中だけ。外部と通信するのは、
+              地図タイルと天気予報を取りに行くときだけです。</span>
           </div>
         </div>
 
         <div class="steps-box">
           <div class="flow-step"><em>STEP1</em><span>GPXとExcelをドラッグ＆ドロップ</span></div>
           <div class="flow-step"><em>STEP2</em><span>シート種別と列の対応を確認</span></div>
-          <div class="flow-step"><em>STEP3</em><span>大会名・出走日時・想定速度を設定</span></div>
+          <div class="flow-step"><em>STEP3</em><span>大会名・出走日時・想定速度、地図と天気の埋め込みを設定</span></div>
           <div class="flow-step"><em>STEP4</em><span>プレビューを見て、HTMLをダウンロード</span></div>
         </div>
       </div>
@@ -168,7 +314,7 @@
   <section id="sheet">
     <div class="wrap">
       <div class="sec-head">
-        <p class="eyebrow">03 — WHAT YOU GET</p>
+        <p class="eyebrow">04 — WHAT YOU GET</p>
         <h2>2種類のシートが出ます。</h2>
         <p>走る場面によって、見たい情報は変わります。同じデータから、
           粒度の違う2枚を作ります。</p>
@@ -183,7 +329,7 @@
         <div class="step">
           <div class="n">詳</div>
           <h3>詳細版</h3>
-          <p>すべての曲がり角とCPを収録。道に迷ったとき、直前の分岐まで戻って確認できます。</p>
+          <p>すべての曲がり角とCPを収録。各地点に地図と天気・風向き。道に迷ったとき、直前の分岐まで戻って確認できます。</p>
         </div>
         <div class="step">
           <div class="n">共</div>
@@ -195,8 +341,8 @@
       <div class="caution">
         <b>走行中の閲覧は、安全な場所に停まってから行ってください。</b>
         生成されるキューシートは走行の補助であり、主催者が配布する正式なキューシートや
-        ブリーフィングの内容に優先するものではありません。距離や時刻は計算値のため、
-        必ず配布資料と照らし合わせてご利用ください。
+        ブリーフィングの内容に優先するものではありません。距離や時刻は計算値、天気は予報のため、
+        必ず配布資料や現地の状況と照らし合わせてご利用ください。
       </div>
     </div>
   </section>
@@ -204,14 +350,26 @@
   <section class="faq" id="faq">
     <div class="wrap">
       <div class="sec-head">
-        <p class="eyebrow">04 — FAQ</p>
+        <p class="eyebrow">05 — FAQ</p>
         <h2>よくある質問</h2>
       </div>
 
       <details>
         <summary>アップロードしたファイルは、どこかに送信されますか？</summary>
         <p>されません。GPXもExcelも、ブラウザの中だけで読み込んで処理します。
-          外部と通信するのは、天気予報と地図タイルを埋め込む機能を使ったときだけです。</p>
+          外部と通信するのは、地図タイル（国土地理院・OpenStreetMap）と天気予報（Open-Meteo）を
+          取りに行くときだけで、送るのは地点の緯度経度だけです。</p>
+      </details>
+      <details>
+        <summary>圏外でも地図と天気は見られますか？</summary>
+        <p>生成時に「埋め込む」を選んでおけば見られます。地図タイルと予報をHTMLの中に焼き込むので、
+          iPhoneの「ファイル」アプリから開いても表示されます。地図を埋め込まない地点にも、
+          GPXから起こしたルート略図が必ず入ります。</p>
+      </details>
+      <details>
+        <summary>天気はいつから表示できますか？</summary>
+        <p>Open-Meteoの予報は本日から16日先までです。開催がそれより先だと「範囲外」と出ます。
+          開催が近づいてから作り直すか、当日オンラインで開いてください。</p>
       </details>
       <details>
         <summary>Excelのキューシートが無くても使えますか？</summary>
@@ -227,11 +385,6 @@
         <summary>スマホだけで使えますか？</summary>
         <p>生成したキューシートはスマホで見るためのものですが、生成する操作自体は
           パソコンのブラウザを想定しています。生成したHTMLを端末に転送してお使いください。</p>
-      </details>
-      <details>
-        <summary>オフラインで表示できますか？</summary>
-        <p>できます。生成物は単一のHTMLなので、端末に保存しておけば圏外でも開けます。
-          天気や地図を埋め込んだ場合も、その内容はHTMLの中に入っています。</p>
       </details>
     </div>
   </section>
@@ -253,11 +406,11 @@
 
 <footer class="footer">
   <div class="wrap footer-inner">
-    <span>ブルベ キューシート生成ツール</span>
+    <span>Ride on QC</span>
     <a href="https://github.com/pikaring/brevet-cuesheet">GitHub</a>
     <a href="https://github.com/pikaring/brevet-cuesheet/blob/main/LICENSE">MIT License</a>
     <a href="https://github.com/pikaring/brevet-cuesheet/blob/main/docs/spec.md">仕様書</a>
-    <span class="sep">Excelの読み取りに <a href="https://sheetjs.com/">SheetJS</a>（Apache-2.0）を利用しています</span>
+    <span class="sep">Excel読取に <a href="https://sheetjs.com/">SheetJS</a>、地図に <a href="https://maps.gsi.go.jp/development/ichiran.html">地理院タイル</a>、天気に <a href="https://open-meteo.com/">Open-Meteo</a> を利用</span>
   </div>
 </footer>
 
