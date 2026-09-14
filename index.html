@@ -398,25 +398,25 @@
         <p>Ride on QC のキューシートはスマホで見るものです。スマホをハンドルに固定するホルダーと、ナビを任せるサイクルコンピュータを並べておきます。</p>
       </div>
       <div class="goods-grid">
-        <div class="good">
+        <div class="good" data-asin="B00YHSX71U">
           <p class="gcat">スマホホルダー</p>
           <h3>ミノウラ iH-220-STD</h3>
           <p>Φ22.2〜28.6mmのハンドル用。ゴムバンドで四隅を押さえる方式で、機種を選びません。</p>
           <a class="glink" href="https://www.amazon.co.jp/dp/B00YHSX71U?tag=redcomet-22" target="_blank" rel="sponsored noopener">Amazonで見る ↗</a>
         </div>
-        <div class="good">
+        <div class="good" data-asin="B08WLL11RK">
           <p class="gcat">スマホホルダー</p>
           <h3>ミノウラ iH-700</h3>
           <p>Φ22〜35mm対応の新しめのモデル。オーバーサイズのハンドルならこちら。</p>
           <a class="glink" href="https://www.amazon.co.jp/dp/B08WLL11RK?tag=redcomet-22" target="_blank" rel="sponsored noopener">Amazonで見る ↗</a>
         </div>
-        <div class="good">
+        <div class="good" data-asin="B0C1K6ZCJF">
           <p class="gcat">サイクルコンピュータ</p>
           <h3>ガーミン Edge 540</h3>
           <p>GPXを入れておけば曲がり角で鳴らしてくれます。キューシートは確認用、ナビはサイコンという分担に。</p>
           <a class="glink" href="https://www.amazon.co.jp/dp/B0C1K6ZCJF?tag=redcomet-22" target="_blank" rel="sponsored noopener">Amazonで見る ↗</a>
         </div>
-        <div class="good">
+        <div class="good" data-asin="B0F4KR66TB">
           <p class="gcat">サイクルコンピュータ</p>
           <h3>Wahoo ELEMNT BOLT V3</h3>
           <p>ボタン操作だけで完結する潔さ。夜間や雨の日でも扱いやすい。</p>
@@ -464,6 +464,35 @@
     .then(function (r) { return r.json(); })
     .then(function (d) { el.textContent = Number(d.count).toLocaleString('ja-JP'); })
     .catch(function () { el.textContent = '―'; });
+})();
+</script>
+<script>
+// Amazon Creators API で取った商品情報（tools/fetch_goods.py が assets/goods.json に書く）。
+// 取れていれば画像と価格を足し、無ければテキストカードのまま。
+(function () {
+  var cards = document.querySelectorAll('.good[data-asin]');
+  if (!cards.length) return;
+  fetch('assets/goods.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {
+    var at = new Date(d.fetchedAt);
+    var stamp = isNaN(at) ? '' : (at.getMonth() + 1) + '/' + at.getDate() + '時点';
+    cards.forEach(function (c) {
+      var it = d.items && d.items[c.dataset.asin];
+      if (!it) return;
+      if (it.image) {
+        var img = document.createElement('img');
+        img.className = 'gimg'; img.src = it.image; img.alt = ''; img.loading = 'lazy';
+        c.insertBefore(img, c.firstChild);
+      }
+      if (it.price) {
+        var p = document.createElement('p');
+        p.className = 'gprice';
+        p.innerHTML = it.price + (stamp ? ' <small>' + stamp + '</small>' : '');
+        var link = c.querySelector('.glink');
+        c.insertBefore(p, link);
+      }
+      if (it.url) { var a = c.querySelector('.glink'); if (a) a.href = it.url; }
+    });
+  }).catch(function () { /* 取れなければ何もしない */ });
 })();
 </script>
 </body>
